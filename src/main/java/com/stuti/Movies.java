@@ -1,2 +1,5 @@
-package com.stuti;public class Movies {
+package com.stuti;
+
+public class Movies {
+
 }

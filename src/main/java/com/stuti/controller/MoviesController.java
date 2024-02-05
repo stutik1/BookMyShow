@@ -1,2 +1,4 @@
-package com.stuti;public class MoviesController {
+package com.stuti.controller;
+
+public class MoviesController {
 }
