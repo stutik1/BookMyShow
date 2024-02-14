@@ -1,5 +1,6 @@
 package com.stuti;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class Users {
@@ -7,9 +8,9 @@ public class Users {
     private String name ;
     private String email;
     private Long phone ;
-    private LocalDateTime createAt ;
+    private Timestamp createAt ;
 
-    public Users(Long id, String name, String email, Long phone, LocalDateTime createAt) {
+    public Users() {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -49,15 +50,15 @@ public class Users {
         this.phone = phone;
     }
 
-    public LocalDateTime getCreateAt() {
+    public Timestamp getCreateAt() {
         return createAt;
     }
 
-    public void setCreateAt(LocalDateTime createAt) {
+    public void setCreateAt(Timestamp createAt) {
         this.createAt = createAt;
     }
 
 
-    public void setCreatedAt(LocalDateTime now) {
+    public void setCreatedAt(Timestamp now) {
     }
 }
