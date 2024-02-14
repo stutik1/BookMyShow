@@ -5,6 +5,7 @@ import com.stuti.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Service
@@ -18,7 +19,6 @@ public class UserService {
     }
 
     public Long saveUser(Users user){
-        user.setCreatedAt(LocalDateTime.now());
         Users savedUsers = userRepository.save(user);
         return savedUsers.getId();
     }
