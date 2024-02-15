@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/bms")
+@RequestMapping("/bms/location")
 public class LocationController {
 
     private final LocationService locationService;
@@ -22,7 +22,7 @@ public class LocationController {
         this.locationService = locationService;
     }
 
-    @GetMapping("/locations")
+    @GetMapping("/getAll")
     public List<Locations> getAllLocations(Locations location){
         return locationService.getLocations() ;
     }

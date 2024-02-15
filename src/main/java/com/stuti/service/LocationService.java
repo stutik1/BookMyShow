@@ -24,6 +24,5 @@ public class LocationService {
 
     public Locations getLocationById(Long id) {
         return locationRepository.findLocationsById(id);
-
     }
 }
