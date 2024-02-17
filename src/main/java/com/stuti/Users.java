@@ -1,11 +1,14 @@
 package com.stuti;
 
+import jakarta.validation.constraints.Email;
+
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 public class Users {
     private Long id;
     private String name ;
+
+    @Email(message = "Please provide a valid email")
     private String email;
     private Long phone ;
     private Timestamp createAt ;

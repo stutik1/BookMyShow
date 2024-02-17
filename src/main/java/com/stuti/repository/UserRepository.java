@@ -5,6 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
+import java.time.Instant;
+
 @Repository
 public class UserRepository {
     private final JdbcTemplate jdbcTemplate;
@@ -26,9 +29,10 @@ public class UserRepository {
                 user.getName(),
                 user.getPhone(),
                 user.getEmail(),
-                user.getCreateAt()
+             Timestamp.from(Instant.now())  //TODO  : have to convert ist to utc time zone
 
         );
+
         return user;
     }
 

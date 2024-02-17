@@ -1,14 +1,19 @@
 package com.stuti.controller;
 
 import com.stuti.Users;
+//import com.stuti.Util;
 import com.stuti.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
-@RequestMapping("/bms")
+@RequestMapping("/bms/user")
+@Validated
 public class UserController {
 
     private final UserService userService;
@@ -24,13 +29,19 @@ public class UserController {
 //        return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
 //    }
 
-    @PostMapping("/user")
-    public ResponseEntity<Long>  createUser(@RequestBody Users user){
-        Long createdUser =  userService.saveUser(user);
-        return  ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+    @PostMapping("/")
+    public ResponseEntity<String> createUser(@Valid @RequestBody Users user){
+
+            Long createdUser =  userService.saveUser(user);
+
+//        if (!Util.validateEmail(user.getEmail())) {
+//            return ResponseEntity.badRequest().body("Invalid email address");
+//        }
+        // return  ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+        return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully");
     }
 
-    @PatchMapping("{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<Users> updateById(@PathVariable Long id, @RequestBody Users updateUser ){
         Users user = userService.updateUser(id,updateUser);
         return ResponseEntity.ok(user);

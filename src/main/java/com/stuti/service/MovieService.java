@@ -18,7 +18,15 @@ public class MovieService {
     }
 
 
-    public List<Movies> searchMovie(String language, String genre, String cityName) {
+    public List<Movies> searchMovie(String cityName) {
+        return movieRepository.searchMovie("all","all",cityName);
+    }
+
+    public List<Movies> search(String language, String cityName) {
+        return movieRepository.searchMovie(language,"all",cityName);
+    }
+
+    public List<Movies> searchMovies(String language, String genre, String cityName) {
         return movieRepository.searchMovie(language,genre,cityName);
     }
 }

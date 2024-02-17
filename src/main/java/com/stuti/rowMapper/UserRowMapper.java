@@ -1,11 +1,9 @@
-package com.stuti;
+package com.stuti.rowMapper;
 
+import com.stuti.Users;
 import org.springframework.jdbc.core.RowMapper;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 public class UserRowMapper implements RowMapper {
 
