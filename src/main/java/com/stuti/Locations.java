@@ -4,7 +4,7 @@ public class Locations {
    private Long id;
    private String city ;
 
-   public Locations(Long id, String city) {
+   public Locations() {
       this.id = id;
       this.city = city;
    }

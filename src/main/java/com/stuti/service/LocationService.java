@@ -17,6 +17,11 @@ public class LocationService {
         this.locationRepository = locationRepository;
     }
 
+    public Locations createLocation(Locations location) {
+        locationRepository.createLocation(location);
+        return location;
+    }
+
     public List<Locations> getLocations() {
         return locationRepository.findAllLocations();
     }
