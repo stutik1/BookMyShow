@@ -1,0 +1,110 @@
+      body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #d0f0f8;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .location, .cart, .order-tracking , .upload-file{
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .locations {
+            display: flex;
+            justify-content: flex-start;
+            padding: 20px;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-content: center;
+        }
+        .location-item {
+            padding: 5px;
+        }
+
+        .location button, .cart button, .order-tracking button , .upload-file button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .location button:hover, .cart button:hover, .order-tracking button:hover,.upload-file button:hover {
+            background-color: #0056b3;
+        }
+
+        .cart ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .order-tracking input[type="text"], .order-tracking button {
+            display: block;
+            margin: 10px auto;
+        }
+
+         .upload input[type="text"], .upload button {
+                    display: block;
+                    margin: 10px auto;
+                }
+
+        #order-status {
+            font-weight: bold;
+        }
+
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .quantity {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .quantity button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .remove button {
+            background-color: #cc0000;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .add-row button {
+            background-color: #009933;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
