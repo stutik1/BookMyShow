@@ -1,48 +1,42 @@
 document.addEventListener("DOMContentLoaded", function () {
-    var productList = document.getElementById("product-list");
+    var locationList = document.getElementById("location-list");
 
-    fetchProducts();
+    fetchLocations();
 
-    function fetchProducts() {
+    function fetchLocations() {
         var xhr = new XMLHttpRequest();
         xhr.open("GET", "/bms/location/getAll", true);
 
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                var products = JSON.parse(xhr.responseText);
+                var locations = JSON.parse(xhr.responseText);
 
-                products.forEach(function (product) {
-                    var productItem = document.createElement("div");
-                    productItem.classList.add("product-item");
+                locations.forEach(function (location) {
+                    var locationItem = document.createElement("div");
+                    locationItem.classList.add("location-item");
 
-                    var productName = document.createElement("h2");
-                    productName.textContent = product.productName;
+                    var city = document.createElement("h2");
+                    city.textContent = location.city;
 
-                    var productDescription = document.createElement("p");
-                    productDescription.textContent = product.productSpec;
 
-                    var productPrice = document.createElement("p");
-                    productPrice.textContent = "Price: $" + product.price;
 
                     var addToCartButton = document.createElement("button");
-                    addToCartButton.textContent = "Add to Cart";
+                    addToCartButton.textContent = "Select";
                     addToCartButton.addEventListener("click", function() {
                         // Call the existing addToCart function and pass the product name
-                        addToCart(product); // Replace "Product Name" with the actual product name
+                        addToCart(location); // Replace "Product Name" with the actual product name
                     });
                     //addToCartButton.addEventListener("click", "addToCart()");
                     //addToCartButton.addEventListener("click", "addToCart");
 
 
 
-                    productItem.appendChild(productName);
-                    productItem.appendChild(productDescription);
-                    productItem.appendChild(productPrice);
-                    productItem.appendChild(addToCartButton);
-                    productList.appendChild(productItem);
+                    locationItem.appendChild(city);
+                    locationItem.appendChild(addToCartButton);
+                   // locationItem.appendChild(locationItem);
                 });
             } else if (xhr.readyState === 4) {
-                console.error("Error fetching products:", xhr.statusText);
+                console.error("Error fetching location:", xhr.statusText);
             }
         };
 
@@ -53,13 +47,13 @@ document.addEventListener("DOMContentLoaded", function () {
 let cartItems = [];
 
 // Function to add an item to the cart
-function  addToCart(product) {
+function  addToCart(location) {
     const cartBody = document.getElementById("cart-body");
     const newRow = document.createElement("tr");
 
     newRow.innerHTML = `
-        <td>${product.productName}</td>
-        <td>${product.productSpec}</td>
+        <td>${location.city}</td>
+        <td>${location.productSpec}</td>
         <td  class = "productPrice" >${product.price}</td>
         <td class="quantity">
             <button onclick="updateQuantity(this, -1)">-</button>
