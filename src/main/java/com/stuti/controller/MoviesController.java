@@ -1,7 +1,9 @@
 package com.stuti.controller;
 
+import com.stuti.Movies;
 import com.stuti.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,8 +30,11 @@ public class MoviesController {
 //        }
     }
 
-//    @PostMapping("/create")
-//    public ResponseEntity
+    @PostMapping("/create")
+    public ResponseEntity<String> addMovie(@RequestBody Movies movie){
+        movieService.createMovie(movie);
+        return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully");
+    }
 
 
 

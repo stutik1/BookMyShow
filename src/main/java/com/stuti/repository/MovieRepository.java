@@ -43,4 +43,11 @@ public class MovieRepository {
         return jdbcTemplate.query(sql, params.toArray(), new BeanPropertyRowMapper<>(Movies.class));
 
     }
+
+    public void addMovie(Movies movie) {
+        String sql = "INSERT INTO movies (id, title, rating, description, actor, genres, language, release_date, location_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, movie.getId(), movie.getTitle(), movie.getRating(), movie.getDescription(),
+                movie.getActor(), String.join(",", movie.getGenres()), movie.getLanguage(), movie.getReleaseDate(),
+                movie.getLocation().getId());
+    }
 }

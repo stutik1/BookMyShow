@@ -29,4 +29,8 @@ public class MovieService {
     public List<Movies> searchMovies(String language, String genre, String cityName) {
         return movieRepository.searchMovie(language,genre,cityName);
     }
+
+    public void createMovie(Movies movie) {
+        movieRepository.addMovie(movie);
+    }
 }
