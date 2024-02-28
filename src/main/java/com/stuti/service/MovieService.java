@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MovieService {
@@ -22,15 +23,27 @@ public class MovieService {
         return movieRepository.searchMovie("all","all",cityName);
     }
 
-    public List<Movies> search(String language, String cityName) {
+    public List<Movies> searchMovie(String language, String cityName) {
         return movieRepository.searchMovie(language,"all",cityName);
     }
 
-    public List<Movies> searchMovies(String language, String genre, String cityName) {
+    public List<Movies> searchMovie(String language, String genre, String cityName) {
         return movieRepository.searchMovie(language,genre,cityName);
     }
 
     public void createMovie(Movies movie) {
         movieRepository.addMovie(movie);
+    }
+
+    public Movies findMovieById(Long id) {
+        return movieRepository.findById(id);
+    }
+
+    public List<Movies> getMovies() {
+        return movieRepository.getMovie();
+    }
+
+    public List<Map<String, Object>> findMoviesByLocation(String city) {
+        return movieRepository.findMoviesByLocation(city);
     }
 }

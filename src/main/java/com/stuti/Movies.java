@@ -1,20 +1,19 @@
 package com.stuti;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class Movies {
     private Long id;
     private String title;
     private String language;
-    private List<String> genres;
+    private String genres;
     private Location location;
     private String actor;
     private String description;
     private Double rating;
     private LocalDate releaseDate;
 
-    public Movies(Long id, String title, String language, List<String> genres, Location location, String actor, String description, Double rating, LocalDate releaseDate) {
+    public Movies() {
         this.id = id;
         this.title = title;
         this.language = language;
@@ -51,12 +50,7 @@ public class Movies {
         this.language = language;
     }
 
-    public List<String> getGenres() {
-        return genres;
-    }
-    public void setGenres(List<String> genres) {
-        this.genres = genres;
-    }
+
 
     public Location getLocation() {
         return location;
@@ -64,6 +58,14 @@ public class Movies {
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    public String getGenres() {
+        return genres;
+    }
+
+    public void setGenres(String genres) {
+        this.genres = genres;
     }
 
     public String getDescription() {

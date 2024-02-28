@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -21,7 +22,8 @@ public class MoviesController {
 
     @GetMapping("/search")
     public ResponseEntity<Map<String, String>> filterMovie(@RequestParam Map<String,String> requestParam){
-       // List<Movies> movies = movieService.searchMovie(language,genre,cityName);
+       //List<Movies> movies = movieService.searchMovie();
+
         return ResponseEntity.ok(requestParam);
 //        if(!movies.isEmpty()){
 //            return ResponseEntity.ok(movies);
@@ -36,6 +38,19 @@ public class MoviesController {
         return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully");
     }
 
+    @GetMapping("/{id}")
+    public Movies getMovieById(@PathVariable Long id) {
+        return movieService.findMovieById(id);
+    }
 
+    @GetMapping("/getAllMovie")
+    public ResponseEntity<Movies> getAllMovies(){
+        List<Movies> movies = movieService.getMovies() ;
+        return (ResponseEntity) ResponseEntity.ok(movies);
+    }
 
+    @GetMapping("/byLocation")
+    public List<Map<String, Object>> findMoviesByLocation(@RequestParam String city) {
+        return movieService.findMoviesByLocation(city);
+    }
 }
