@@ -1,25 +1,30 @@
 package com.stuti;
 
-import java.util.List;
+import java.time.LocalDate;
 
 public class Movies {
     private Long id;
     private String title;
     private String language;
-    private String genre;
-    private Locations location;
+    private String genres;
+    private Location location;
+    private String actor;
     private String description;
     private Double rating;
+    private LocalDate releaseDate;
 
-    public Movies(Long id, String title, String language, String genre, Locations location, String description, Double rating) {
+    public Movies() {
         this.id = id;
         this.title = title;
         this.language = language;
-        this.genre = genre;
+        this.genres = genres;
         this.location = location;
+        this.actor = actor;
         this.description = description;
         this.rating = rating;
+        this.releaseDate = releaseDate;
     }
+
 
     public Long getId() {
         return id;
@@ -45,20 +50,22 @@ public class Movies {
         this.language = language;
     }
 
-    public String getGenre() {
-        return genre;
-    }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
 
-    public Locations getLocation() {
+    public Location getLocation() {
         return location;
     }
 
-    public void setLocation(Locations location) {
+    public void setLocation(Location location) {
         this.location = location;
+    }
+
+    public String getGenres() {
+        return genres;
+    }
+
+    public void setGenres(String genres) {
+        this.genres = genres;
     }
 
     public String getDescription() {
@@ -75,5 +82,21 @@ public class Movies {
 
     public void setRating(Double rating) {
         this.rating = rating;
+    }
+
+    public LocalDate getReleaseDate() {
+        return releaseDate;
+    }
+
+    public String getActor() {
+        return actor;
+    }
+
+    public void setActor(String actor) {
+        this.actor = actor;
+    }
+
+    public void setReleaseDate(LocalDate releaseDate) {
+        this.releaseDate = releaseDate;
     }
 }

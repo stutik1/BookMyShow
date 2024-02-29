@@ -1,10 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>book-my-show</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
 </head>
 <body>
-$END$
+<h1>Welcome to Book My Show</h1>
+<H3><p>BOOK CHEAP TICKET ON BOOKMYSHOW</p></H3>
+
+<!-- Locations Details -->
+<div class="location">
+    <h2>Location</h2>
+    <div id="location-list" class="locations">
+    </div>
+</div>
+
+
+<!-- Cart -->
+<div class="cart">
+    <h2>Cart</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Products</th>
+            <th>Products Spec</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th class="remove">Remove</th>
+        </tr>
+        </thead>
+        <tbody id="cart-body">
+        <!-- Cart items will be added here dynamically -->
+        </tbody>
+    </table>
+    <button onclick="placeOrder()">Place Order</button>
+</div>
+
+<!-- Order Tracking -->
+<div class="order-tracking">
+    <h2>Order Tracking</h2>
+    <input type="text" id="order-number" placeholder="Enter Order Number">
+    <button onclick="trackOrder()">Track Order</button>
+    <p id="order-status"></p>
+</div>
+
+
+<div class="upload-file">
+    <h2>Upload File</h2>
+    <input type="file" id="fileInput" placeholder="upload your file here">
+    <button onclick="uploadFile()">Upload</button>
+</div>
 </body>
 </html>
