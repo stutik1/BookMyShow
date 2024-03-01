@@ -1,6 +1,6 @@
 package com.stuti.service;
 
-import com.stuti.Locations;
+import com.stuti.Location;
 import com.stuti.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,17 +17,17 @@ public class LocationService {
         this.locationRepository = locationRepository;
     }
 
-    public Locations createLocation(Locations location) {
+    public Location createLocation(Location location) {
         locationRepository.createLocation(location);
         return location;
     }
 
-    public List<Locations> getLocations() {
+    public List<Location> getLocations() {
         return locationRepository.findAllLocations();
     }
 
 
-    public Locations getLocationById(Long id) {
+    public Location getLocationById(Long id) {
         return locationRepository.findLocationsById(id);
     }
 }

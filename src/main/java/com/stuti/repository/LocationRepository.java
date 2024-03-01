@@ -1,6 +1,6 @@
 package com.stuti.repository;
 
-import com.stuti.Locations;
+import com.stuti.Location;
 import com.stuti.rowMapper.LocationRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -19,20 +19,20 @@ public class LocationRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public Locations createLocation(Locations location) {
-        String sql = "INSERT INTO locations(city) VALUES (?)";
+    public Location createLocation(Location location) {
+        String sql = "INSERT INTO location(city) VALUES (?)";
         jdbcTemplate.update(sql, location.getCity());
         return location;
     }
 
-    public List<Locations> findAllLocations() {
-        String sql = "select * from locations";
-        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Locations.class));
+    public List<Location> findAllLocations() {
+        String sql = "select * from location";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Location.class));
     }
 
-    public Locations findLocationsById(Long id) {
-        String sql = "select * from locations where id = ?";
-        return (Locations) jdbcTemplate.queryForObject(sql, new Object[]{id}, new LocationRowMapper());
+    public Location findLocationsById(Long id) {
+        String sql = "select * from location where id = ?";
+        return (Location) jdbcTemplate.queryForObject(sql, new Object[]{id}, new LocationRowMapper());
     }
 
 }
