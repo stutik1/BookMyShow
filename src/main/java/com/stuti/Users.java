@@ -1,7 +1,6 @@
 package com.stuti;
 
 import jakarta.validation.constraints.Email;
-
 import java.sql.Timestamp;
 
 public class Users {
@@ -10,7 +9,8 @@ public class Users {
 
     @Email(message = "Please provide a valid email")
     private String email;
-    private Long phone ;
+
+    private String phone ;
     private Timestamp createAt ;
 
     public Users() {
@@ -45,11 +45,11 @@ public class Users {
         this.email = email;
     }
 
-    public Long getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Long phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
@@ -60,7 +60,6 @@ public class Users {
     public void setCreateAt(Timestamp createAt) {
         this.createAt = createAt;
     }
-
 
     public void setCreatedAt(Timestamp now) {
     }

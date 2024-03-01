@@ -1,6 +1,9 @@
 package com.stuti.repository;
 
+import com.stuti.Location;
 import com.stuti.Users;
+import com.stuti.rowMapper.LocationRowMapper;
+import com.stuti.rowMapper.UserRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -30,14 +33,18 @@ public class UserRepository {
                 user.getPhone(),
                 user.getEmail(),
              Timestamp.from(Instant.now())  //TODO  : have to convert ist to utc time zone
-
         );
-
         return user;
     }
 
-    public Users getId(Long id) {
-         return getId(id);
+//    public Users getId(Long id) {
+//        String sql = "SELECT * from users where id = ? ";
+//        return (Users) jdbcTemplate.queryForObject(sql, new Object[]{id}, new UserRowMapper());
+ //   }
+
+    public Users findById(Long id) {
+        String sql = "SELECT * FROM users WHERE id = ?";
+        return (Users) jdbcTemplate.queryForObject(sql, new Object[]{id}, new UserRowMapper());
     }
 
 }
