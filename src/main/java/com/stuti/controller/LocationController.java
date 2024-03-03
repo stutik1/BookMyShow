@@ -1,6 +1,6 @@
 package com.stuti.controller;
 
-import com.stuti.Locations;
+import com.stuti.Location;
 import com.stuti.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,19 +21,20 @@ public class LocationController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Locations> createLocation(@RequestBody Locations locations){
-        locationService.createLocation(locations);
+    public ResponseEntity<Location> createLocation(@RequestBody Location location){
+        locationService.createLocation(location);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("/getAll")
-    public List<Locations> getAllLocations(Locations location){
-        return locationService.getLocations() ;
+    public ResponseEntity<Location> getAllLocations(){
+    List<Location> location = locationService.getLocations() ;
+        return (ResponseEntity) ResponseEntity.ok(location);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Locations> getLocationById(@PathVariable Long id ){
-        Locations location = locationService.getLocationById(id);
+    public ResponseEntity<Location> getLocationById(@PathVariable Long id ){
+        Location location = locationService.getLocationById(id);
         return ResponseEntity.ok().body(location);
     }
 }

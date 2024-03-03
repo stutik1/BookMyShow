@@ -1,10 +1,10 @@
 package com.stuti;
 
-public class Locations {
+public class Location {
    private Long id;
    private String city ;
 
-   public Locations() {
+   public Location() {
       this.id = id;
       this.city = city;
    }
