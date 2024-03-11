@@ -16,7 +16,7 @@ public class TheatresRowMapper implements RowMapper<Theatres> {
         theater.setName(rs.getString("name"));
 
         Location location = new Location();
-        location.setId(rs.getLong("location_id"));
+        location.setId(rs.getLong("id"));
         location.setCity(rs.getString("city"));
         theater.setLocation(location);
 
