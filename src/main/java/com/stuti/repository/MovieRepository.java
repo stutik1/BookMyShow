@@ -25,9 +25,9 @@ public class MovieRepository {
     }
 
     public List<Movies> searchMovie(String language, String genre, String cityName) {
-        String sql = "SELECT m.id, m.title, m.language, m.genre, m.description, m.rating, l.cityName " +
-                "FROM movies m " +
-                "LEFT JOIN locations l ON m.location_id = l.id " +
+        String sql = "SELECT m.* FROM movies m " +
+                "JOIN movie_locations ml ON m.id = ml.movie_id " +
+                "JOIN location l ON ml.location_id = l.id " +
                 "WHERE 1=1";
         List<Object> params = new ArrayList<>();
 
@@ -51,15 +51,14 @@ public class MovieRepository {
 
     public void addMovie(Movies movie) {
         String sql = "INSERT INTO movies (id, title, rating, description, actor, genres, language, release_date, location_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql, movie.getId(), movie.getTitle(), movie.getRating(), movie.getDescription(),
-                movie.getActor(), String.join(",", movie.getGenres()), movie.getLanguage(), movie.getReleaseDate(),
-                movie.getLocation().getId());
+        jdbcTemplate.update(sql, movie.getMovieId(), movie.getTitle(), movie.getRating(), movie.getDescription(),
+                movie.getActor(), String.join(",", movie.getGenres()), movie.getLanguage(), movie.getReleaseDate());
     }
 
-    public Movies findById(Long id) {
-      // String sql = "Select * from movies where id = ?";
-       String sql =  "SELECT m.id, m.title, m.rating, m.description, m.actor, m.genres, m.language, m.release_date, l.city FROM movies m JOIN location l ON m.location_id = l.id WHERE m.id = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[]{id}, new MovieRowMapper());
+    public Movies findById(Long movieId) {
+       String sql = "Select * from movies where id = ?";
+       //String sql =  "SELECT m.id, m.title, m.rating, m.description, m.actor, m.genres, m.language, m.release_date, l.city FROM movies m JOIN location l ON m.location_id = l.id WHERE m.id = ?";
+        return jdbcTemplate.queryForObject(sql, new Object[]{movieId}, new MovieRowMapper());
 
       //  return (Movies) jdbcTemplate.queryForObject(sql, new Object[]{id}, new MovieRowMapper());
 
@@ -71,15 +70,20 @@ public class MovieRepository {
     }
 
     public List<Map<String, Object>> findMoviesByLocation(String city) {
-
-        String[] strs={"Cat","Mat","Ama","Cam"};
-        Arrays.stream(strs).filter(a->a.contains("m")).map(String::toUpperCase).collect(Collectors.toList());
         String sql = "SELECT m.title, m.rating, m.description, m.actor, m.genres, m.language, m.release_date " +
                 "FROM movies m " +
                 "JOIN movie_locations ml ON m.id = ml.movie_id " +
                 "JOIN location l ON ml.location_id = l.id " +
                 "WHERE l.city = ?";
         return jdbcTemplate.queryForList(sql, city);
+    }
 
+    public List<Movies> findMoviesByLocationGenresAndLanguage(String city, String genres, String language) {
+        String sql = "SELECT m.* FROM movies m " +
+                "JOIN movie_locations ml ON m.id = ml.movie_id " +
+                "JOIN location l ON ml.location_id = l.id " +
+                "WHERE l.city = ? AND m.genres = ? AND m.language = ?";
+
+        return jdbcTemplate.query(sql, new Object[]{city, genres, language}, new MovieRowMapper());
     }
 }

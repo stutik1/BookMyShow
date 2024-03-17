@@ -3,35 +3,37 @@ package com.stuti;
 import java.time.LocalDate;
 
 public class Movies {
-    private Long id;
+    private Long movieId;
     private String title;
     private String language;
     private String genres;
-    private Location location;
+    //private Location location;
     private String actor;
     private String description;
     private Double rating;
     private LocalDate releaseDate;
 
-    public Movies() {
-        this.id = id;
+    public Movies(Long movieId, String title, String language, String genres, String actor, String description, Double rating, LocalDate releaseDate) {
+        this.movieId = movieId;
         this.title = title;
         this.language = language;
         this.genres = genres;
-        this.location = location;
         this.actor = actor;
         this.description = description;
         this.rating = rating;
         this.releaseDate = releaseDate;
     }
 
+    public Movies() {
 
-    public Long getId() {
-        return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Long getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(Long id) {
+        this.movieId = movieId;
     }
 
     public String getTitle() {
@@ -50,15 +52,13 @@ public class Movies {
         this.language = language;
     }
 
-
-
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
+//    public Location getLocation() {
+//        return location;
+//    }
+//
+//    public void setLocation(Location location) {
+//        this.location = location;
+//    }
 
     public String getGenres() {
         return genres;

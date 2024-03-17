@@ -20,17 +20,17 @@ public class MoviesController {
         this.movieService = movieService;
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<Map<String, String>> filterMovie(@RequestParam Map<String,String> requestParam){
-       //List<Movies> movies = movieService.searchMovie();
-
-        return ResponseEntity.ok(requestParam);
-//        if(!movies.isEmpty()){
-//            return ResponseEntity.ok(movies);
-//        }else{
-//            return ResponseEntity.notFound().build();
-//        }
-    }
+//    @GetMapping("/search")
+//    public ResponseEntity<Map<String, String>> filterMovie(@RequestParam Map<String,String> requestParam){
+//        //List<Movies> movies = movieService.searchMovie();
+//
+//        return ResponseEntity.ok(requestParam);
+////        if(!movies.isEmpty()){
+////            return ResponseEntity.ok(movies);
+////        }else{
+////            return ResponseEntity.notFound().build();
+////        }
+//    }
 
     @PostMapping("/create")
     public ResponseEntity<String> addMovie(@RequestBody Movies movie){
@@ -38,9 +38,9 @@ public class MoviesController {
         return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully");
     }
 
-    @GetMapping("/{id}")
-    public Movies getMovieById(@PathVariable Long id) {
-        return movieService.findMovieById(id);
+    @GetMapping("/{movieId}")
+    public Movies getMovieById(@PathVariable Long movieId) {
+        return movieService.findMovieById(movieId);
     }
 
     @GetMapping("/getAllMovie")
@@ -49,8 +49,32 @@ public class MoviesController {
         return (ResponseEntity) ResponseEntity.ok(movies);
     }
 
+//    @GetMapping("/byLocation")
+//    public List<Map<String, Object>> findMoviesByLocation(@RequestParam String city) {
+//        List<Map<String, Object>> movies = movieService.findMoviesByLocation(city);
+//        return movieService.findMoviesByLocation(String.valueOf(movies));
+//    }
+
     @GetMapping("/byLocation")
-    public List<Map<String, Object>> findMoviesByLocation(@RequestParam String city) {
-        return movieService.findMoviesByLocation(city);
+    public ResponseEntity<List<Map<String, Object>>> findMoviesByLocation(@RequestParam String city){
+        List<Map<String, Object>> movies = movieService.findMoviesByLocation(city);
+        if (movies.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(movies);
+        }
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Movies>> searchMovies(@RequestParam String city,
+                                                    @RequestParam String genres,
+                                                    @RequestParam String language) {
+        List<Movies> movies = movieService.getMoviesByLocationGenresAndLanguage(city, genres, language);
+        if (movies.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(movies);
+        }
+    }
+
 }

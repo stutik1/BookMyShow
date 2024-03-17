@@ -35,8 +35,8 @@ public class MovieService {
         movieRepository.addMovie(movie);
     }
 
-    public Movies findMovieById(Long id) {
-        return movieRepository.findById(id);
+    public Movies findMovieById(Long movieId) {
+        return movieRepository.findById(movieId);
     }
 
     public List<Movies> getMovies() {
@@ -45,5 +45,9 @@ public class MovieService {
 
     public List<Map<String, Object>> findMoviesByLocation(String city) {
         return movieRepository.findMoviesByLocation(city);
+    }
+
+    public List<Movies> getMoviesByLocationGenresAndLanguage(String city, String genres, String language) {
+        return movieRepository.findMoviesByLocationGenresAndLanguage(city, genres, language);
     }
 }
