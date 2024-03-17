@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
         xhr.open("GET", "/bms/location/getAll", true);
 
         xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
+            if (xhr.readyState === 2 && xhr.status === 200) {
                 var locations = JSON.parse(xhr.responseText);
 
                 locations.forEach(function (location) {
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     locationItem.appendChild(addToCartButton);
                    // locationItem.appendChild(locationItem);
                 });
-            } else if (xhr.readyState === 4) {
+            } else if (xhr.readyState === 2) {
                 console.error("Error fetching location:", xhr.statusText);
             }
         };
