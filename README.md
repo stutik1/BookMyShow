@@ -97,7 +97,7 @@ To publish messages to an Apache Kafka topic from a Spring Boot application, you
    }
    ```
 
-4**Create a Kafka Consumer**:
+4. **Create a Kafka Consumer**:
    Create a Kafka consumer class to send messages to a Kafka topic:
 
    ```java
@@ -120,7 +120,7 @@ public class KafkaConsumerService {
 }
    ```
    
-5**Publish Messages from your Spring Boot Application**:
+5. **Publish Messages from your Spring Boot Application**:
    Use the Kafka producer service to publish messages from your Spring Boot application:
 
    ```java
@@ -176,7 +176,7 @@ public class LocationController {
    }
 }
    ```
-6**Run the Application**:
+6. **Run the Application**:
    Run your Spring Boot application, and it will publish a message to the specified Kafka topic.
 
 Make sure you have Kafka running locally and that the topic "test-topic" exists. Adjust the topic name and message content as needed for your use case.
