@@ -104,8 +104,8 @@ To publish messages to an Apache Kafka topic from a Spring Boot application, you
    import org.springframework.kafka.core.KafkaTemplate;
    import org.springframework.stereotype.Service;
 
-@Service
-public class KafkaConsumerService {
+   @Service
+   public class KafkaConsumerService {
    @Autowired
    private KafkaTemplate<String, String> kafkaTemplate;
    public List<String> messageList=new ArrayList<>();
@@ -115,8 +115,8 @@ public class KafkaConsumerService {
       // Process the received message here
       messageList.add(message);
       System.out.println("Received message: " + message);
+    }
    }
-}
    ```
    
 5. **Publish Messages from your Spring Boot Application**:
@@ -124,56 +124,55 @@ public class KafkaConsumerService {
 
    ```java
    package com.stuti.controller;
-
-import com.stuti.Location;
-import com.stuti.service.KafkaConsumerService;
-import com.stuti.service.KafkaProducerService;
-import com.stuti.service.LocationService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
-@RestController
-@RequestMapping("/bms/location")
-public class LocationController {
-
-   private final LocationService locationService;
-   private final KafkaProducerService kafkaProducerService;
-   private final KafkaConsumerService kafkaConsumerService;
-
-   @Autowired
-   public LocationController(LocationService locationService, KafkaProducerService kafkaProducerService, KafkaConsumerService kafkaConsumerService) {
-      this.locationService = locationService;
-      this.kafkaProducerService = kafkaProducerService;
-      this.kafkaConsumerService = kafkaConsumerService;
+   import com.stuti.Location;
+   import com.stuti.service.KafkaConsumerService;
+   import com.stuti.service.KafkaProducerService;
+   import com.stuti.service.LocationService;
+   import org.springframework.beans.factory.annotation.Autowired;
+   import org.springframework.http.HttpStatus;
+   import org.springframework.http.ResponseEntity;
+   import org.springframework.web.bind.annotation.*;
+   
+   import java.util.ArrayList;
+   import java.util.List;
+   
+   @RestController
+   @RequestMapping("/bms/location")
+   public class LocationController {
+   
+      private final LocationService locationService;
+      private final KafkaProducerService kafkaProducerService;
+      private final KafkaConsumerService kafkaConsumerService;
+   
+      @Autowired
+      public LocationController(LocationService locationService, KafkaProducerService kafkaProducerService, KafkaConsumerService kafkaConsumerService) {
+         this.locationService = locationService;
+         this.kafkaProducerService = kafkaProducerService;
+         this.kafkaConsumerService = kafkaConsumerService;
+      }
+   
+      @PostMapping("/create")
+      public ResponseEntity<Location> createLocation(@RequestBody Location location){
+         locationService.createLocation(location);
+         kafkaProducerService.sendMessage("guru",location.getCity());
+         return ResponseEntity.status(HttpStatus.CREATED).build();
+      }
+   
+      @GetMapping("/getAll")
+      public ResponseEntity<Location> getAllLocations(){
+         List<Location> location = locationService.getLocations() ;
+         List<Object> allCity = new ArrayList<>();
+         allCity.addAll(location);
+         allCity.addAll(kafkaConsumerService.messageList);
+         return (ResponseEntity) ResponseEntity.ok(allCity);
+      }
+   
+      @GetMapping("/{id}")
+      public ResponseEntity<Location> getLocationById(@PathVariable Long id ){
+         Location location = locationService.getLocationById(id);
+         return ResponseEntity.ok().body(location);
+      }
    }
-
-   @PostMapping("/create")
-   public ResponseEntity<Location> createLocation(@RequestBody Location location){
-      locationService.createLocation(location);
-      kafkaProducerService.sendMessage("guru",location.getCity());
-      return ResponseEntity.status(HttpStatus.CREATED).build();
-   }
-
-   @GetMapping("/getAll")
-   public ResponseEntity<Location> getAllLocations(){
-      List<Location> location = locationService.getLocations() ;
-      List<Object> allCity = new ArrayList<>();
-      allCity.addAll(location);
-      allCity.addAll(kafkaConsumerService.messageList);
-      return (ResponseEntity) ResponseEntity.ok(allCity);
-   }
-
-   @GetMapping("/{id}")
-   public ResponseEntity<Location> getLocationById(@PathVariable Long id ){
-      Location location = locationService.getLocationById(id);
-      return ResponseEntity.ok().body(location);
-   }
-}
    ```
 6. **Run the Application**:
    Run your Spring Boot application, and it will publish a message to the specified Kafka topic.
