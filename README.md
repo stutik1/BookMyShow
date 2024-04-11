@@ -35,7 +35,8 @@ Setting up Apache Kafka on your local machine involves several steps. Here's a b
     - Navigate to the Kafka directory.
     - Run the following command to create a topic named "test" with default settings:
       ```
-      bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
+      //bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
+      bin/kafka-topics.sh --create --topic guru  --bootstrap-server localhost:9092
       ```
 
 7. **Produce and Consume Messages**:
@@ -46,7 +47,7 @@ Setting up Apache Kafka on your local machine involves several steps. Here's a b
       ```
     - To consume messages, run:
       ```
-      bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning
+      bin/kafka-console-consumer.sh --topic guru --from-beginning --bootstrap-server localhost:9092
       ```
 
 That's it! You now have Kafka running on your local machine. You can produce and consume messages on the "test" topic. You can explore further configurations and features as you become more familiar with Kafka.
@@ -96,34 +97,86 @@ To publish messages to an Apache Kafka topic from a Spring Boot application, you
    }
    ```
 
-4. **Publish Messages from your Spring Boot Application**:
-   Use the Kafka producer service to publish messages from your Spring Boot application:
+4**Create a Kafka Consumer**:
+   Create a Kafka consumer class to send messages to a Kafka topic:
 
    ```java
    import org.springframework.beans.factory.annotation.Autowired;
-   import org.springframework.boot.CommandLineRunner;
-   import org.springframework.boot.SpringApplication;
-   import org.springframework.boot.autoconfigure.SpringBootApplication;
+   import org.springframework.kafka.core.KafkaTemplate;
+   import org.springframework.stereotype.Service;
 
-   @SpringBootApplication
-   public class KafkaProducerApplication implements CommandLineRunner {
+@Service
+public class KafkaConsumerService {
+   @Autowired
+   private KafkaTemplate<String, String> kafkaTemplate;
+   public List<String> messageList=new ArrayList<>();
 
-       @Autowired
-       private KafkaProducerService producerService;
-
-       public static void main(String[] args) {
-           SpringApplication.run(KafkaProducerApplication.class, args);
-       }
-
-       @Override
-       public void run(String... args) throws Exception {
-           // Publish a sample message to a Kafka topic
-           producerService.sendMessage("test-topic", "Hello, Kafka!");
-       }
+   @KafkaListener(topics = "guru", groupId = "test-consumer-group")
+   public void consumeMessage(String message) {
+      // Process the received message here
+      messageList.add(message);
+      System.out.println("Received message: " + message);
    }
+}
    ```
+   
+5**Publish Messages from your Spring Boot Application**:
+   Use the Kafka producer service to publish messages from your Spring Boot application:
 
-5. **Run the Application**:
+   ```java
+   package com.stuti.controller;
+
+import com.stuti.Location;
+import com.stuti.service.KafkaConsumerService;
+import com.stuti.service.KafkaProducerService;
+import com.stuti.service.LocationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@RestController
+@RequestMapping("/bms/location")
+public class LocationController {
+
+   private final LocationService locationService;
+   private final KafkaProducerService kafkaProducerService;
+   private final KafkaConsumerService kafkaConsumerService;
+
+   @Autowired
+   public LocationController(LocationService locationService, KafkaProducerService kafkaProducerService, KafkaConsumerService kafkaConsumerService) {
+      this.locationService = locationService;
+      this.kafkaProducerService = kafkaProducerService;
+      this.kafkaConsumerService = kafkaConsumerService;
+   }
+
+   @PostMapping("/create")
+   public ResponseEntity<Location> createLocation(@RequestBody Location location){
+      locationService.createLocation(location);
+      kafkaProducerService.sendMessage("guru",location.getCity());
+      return ResponseEntity.status(HttpStatus.CREATED).build();
+   }
+
+   @GetMapping("/getAll")
+   public ResponseEntity<Location> getAllLocations(){
+      List<Location> location = locationService.getLocations() ;
+      List<Object> allCity = new ArrayList<>();
+      allCity.addAll(location);
+      allCity.addAll(kafkaConsumerService.messageList);
+      return (ResponseEntity) ResponseEntity.ok(allCity);
+   }
+
+   @GetMapping("/{id}")
+   public ResponseEntity<Location> getLocationById(@PathVariable Long id ){
+      Location location = locationService.getLocationById(id);
+      return ResponseEntity.ok().body(location);
+   }
+}
+   ```
+6**Run the Application**:
    Run your Spring Boot application, and it will publish a message to the specified Kafka topic.
 
 Make sure you have Kafka running locally and that the topic "test-topic" exists. Adjust the topic name and message content as needed for your use case.
