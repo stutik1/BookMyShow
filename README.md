@@ -35,7 +35,6 @@ Setting up Apache Kafka on your local machine involves several steps. Here's a b
     - Navigate to the Kafka directory.
     - Run the following command to create a topic named "test" with default settings:
       ```
-      //bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
       bin/kafka-topics.sh --create --topic guru  --bootstrap-server localhost:9092
       ```
 
