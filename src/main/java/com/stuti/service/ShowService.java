@@ -1,6 +1,6 @@
 package com.stuti.service;
 
-import com.stuti.Shows;
+import com.stuti.model.Shows;
 import com.stuti.repository.ShowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,8 +21,7 @@ public class ShowService {
         return showRepository.findShowsByMovie(movieId);
     }
 
-    public List<Shows> findShowsByMovieAndLocation(Long movieId, Long id) {
-        return showRepository.findShowsByMovieAndLocation(movieId, id);
+    public List<Shows> getShowsByMovieIdAndCity(Long movieId, String city) {
+        return showRepository.findShowsByMovieAndLocation(movieId,city);
     }
-
 }

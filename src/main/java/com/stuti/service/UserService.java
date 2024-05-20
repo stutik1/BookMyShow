@@ -1,6 +1,6 @@
 package com.stuti.service;
 
-import com.stuti.Users;
+import com.stuti.model.Users;
 import com.stuti.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.stuti.rowMapper;
 
-import com.stuti.Users;
+import com.stuti.model.Users;
 import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -1,4 +1,4 @@
-package com.stuti;
+package com.stuti.model;
 
 public class Location {
    private Long id;

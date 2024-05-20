@@ -1,4 +1,4 @@
-package com.stuti;
+package com.stuti.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -8,19 +8,19 @@ public class Shows {
     private LocalDate date ;
     private LocalTime start_time ;
     private LocalTime end_time ;
-    private Movies movies;
+    private Movie movie;
     private Theatres theatres;
     private Location location;
 
     public Shows() {
     }
 
-    public Shows(Long showId, LocalDate date, LocalTime start_time, LocalTime end_time, Movies movies, Theatres theatres) {
+    public Shows(Long showId, LocalDate date, LocalTime start_time, LocalTime end_time, Movie movie, Theatres theatres) {
         this.showId = showId;
         this.date = date;
         this.start_time = start_time;
         this.end_time = end_time;
-        this.movies = movies;
+        this.movie = movie;
         this.theatres = theatres;
     }
 
@@ -56,12 +56,12 @@ public class Shows {
         this.end_time = end_time;
     }
 
-    public Movies getMovies() {
-        return movies;
+    public Movie getMovies() {
+        return movie;
     }
 
-    public void setMovies(Movies movies) {
-        this.movies = movies;
+    public void setMovies(Movie movie) {
+        this.movie = movie;
     }
 
     public Theatres getTheatres() {

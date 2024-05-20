@@ -1,6 +1,6 @@
 package com.stuti.repository;
 
-import com.stuti.Shows;
+import com.stuti.model.Shows;
 import com.stuti.rowMapper.ShowRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -25,8 +25,12 @@ public class ShowRepository {
 
     }
 
-    public List<Shows> findShowsByMovieAndLocation(Long movieId, Long id) {
-        String sql = "SELECT s.* FROM shows s JOIN movies m ON s.movie_id = m.id JOIN location l ON s.location_id = l.id WHERE m.id = ? AND l.id = ?";
-        return jdbcTemplate.query(sql, new Object[] { movieId, id }, new ShowRowMapper());
+    public List<Shows> findShowsByMovieAndLocation(Long movieId, String city) {
+        String sql = "SELECT s.id, s.show_date, s.start_time, s.end_time, t.name , l.city FROM shows s " +
+                "JOIN theaters t ON s.theater_id = t.id " +
+                "JOIN location l ON t.location_id = l.id " +
+                "WHERE s.movie_id = ? AND l.city = ?";
+        return jdbcTemplate.query(sql, new Object[]{movieId, city}, new ShowRowMapper());
     }
 }
+

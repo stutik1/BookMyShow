@@ -1,4 +1,4 @@
-package com.stuti;
+package com.stuti.model;
 
 public class Theatres {
     private Long id ;

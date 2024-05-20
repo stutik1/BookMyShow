@@ -1,4 +1,4 @@
-package com.stuti;
+package com.stuti.model;
 
 import jakarta.validation.constraints.Email;
 import java.sql.Timestamp;

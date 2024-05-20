@@ -1,7 +1,6 @@
 package com.stuti.repository;
 
-import com.stuti.Location;
-import com.stuti.Movies;
+import com.stuti.model.Movie;
 import com.stuti.rowMapper.MovieRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -9,10 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Repository
 public class MovieRepository {
@@ -24,7 +20,7 @@ public class MovieRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Movies> searchMovie(String language, String genre, String cityName) {
+    public List<Movie> searchMovie(String language, String genre, String cityName) {
         String sql = "SELECT m.* FROM movies m " +
                 "JOIN movie_locations ml ON m.id = ml.movie_id " +
                 "JOIN location l ON ml.location_id = l.id " +
@@ -45,17 +41,17 @@ public class MovieRepository {
             sql += " AND l.cityName = ?";
             params.add(cityName);
         }
-        return jdbcTemplate.query(sql, params.toArray(), new BeanPropertyRowMapper<>(Movies.class));
+        return jdbcTemplate.query(sql, params.toArray(), new BeanPropertyRowMapper<>(Movie.class));
 
     }
 
-    public void addMovie(Movies movie) {
+    public void addMovie(Movie movie) {
         String sql = "INSERT INTO movies (id, title, rating, description, actor, genres, language, release_date, location_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql, movie.getMovieId(), movie.getTitle(), movie.getRating(), movie.getDescription(),
                 movie.getActor(), String.join(",", movie.getGenres()), movie.getLanguage(), movie.getReleaseDate());
     }
 
-    public Movies findById(Long movieId) {
+    public Movie findById(Long movieId) {
        String sql = "Select * from movies where id = ?";
        //String sql =  "SELECT m.id, m.title, m.rating, m.description, m.actor, m.genres, m.language, m.release_date, l.city FROM movies m JOIN location l ON m.location_id = l.id WHERE m.id = ?";
         return jdbcTemplate.queryForObject(sql, new Object[]{movieId}, new MovieRowMapper());
@@ -64,21 +60,21 @@ public class MovieRepository {
 
     }
 
-    public List<Movies> getMovie() {
+    public List<Movie> getMovie() {
         String sql = "select * from movies";
-        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Movies.class));
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Movie.class));
     }
 
-    public List<Map<String, Object>> findMoviesByLocation(String city) {
-        String sql = "SELECT m.title, m.rating, m.description, m.actor, m.genres, m.language, m.release_date " +
+    public List<Movie> findMoviesByLocation(String city) {
+        String sql = "SELECT m.id,m.title, m.rating, m.description, m.actor, m.genres, m.language, m.release_date " +
                 "FROM movies m " +
                 "JOIN movie_locations ml ON m.id = ml.movie_id " +
                 "JOIN location l ON ml.location_id = l.id " +
                 "WHERE l.city = ?";
-        return jdbcTemplate.queryForList(sql, city);
+        return jdbcTemplate.query(sql,new MovieRowMapper(),city);
     }
 
-    public List<Movies> findMoviesByLocationGenresAndLanguage(String city, String genres, String language) {
+    public List<Movie> findMoviesByLocationGenresAndLanguage(String city, String genres, String language) {
         String sql = "SELECT m.* FROM movies m " +
                 "JOIN movie_locations ml ON m.id = ml.movie_id " +
                 "JOIN location l ON ml.location_id = l.id " +

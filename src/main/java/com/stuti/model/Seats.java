@@ -1,4 +1,4 @@
-package com.stuti;
+package com.stuti.model;
 
 public class Seats {
     public Seats() {
@@ -8,9 +8,10 @@ public class Seats {
     public void setShowId(long id) {
     }
 
-    public enum SeatStatus {
-            AVAILABLE, BOOKED
+        public enum SeatStatus {
+            AVAILABLE, OCCUPIED, OUT_OF_SERVICE, BOOKED
         }
+
 
         private Long seatId;
         private String seatRow;

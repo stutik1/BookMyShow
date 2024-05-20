@@ -1,8 +1,8 @@
 package com.stuti.controller;
 
-import com.stuti.Location;
-import com.stuti.service.KafkaConsumerService;
-import com.stuti.service.KafkaProducerService;
+import com.stuti.model.Location;
+//import com.stuti.service.KafkaConsumerService;
+//import com.stuti.service.KafkaProducerService;
 import com.stuti.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,20 +17,24 @@ import java.util.List;
 public class LocationController {
 
     private final LocationService locationService;
-    private final KafkaProducerService kafkaProducerService;
-    private final KafkaConsumerService kafkaConsumerService;
+//    private final KafkaProducerService kafkaProducerService;
+//    private final KafkaConsumerService kafkaConsumerService;
 
+//    @Autowired
+//    public LocationController(LocationService locationService, KafkaProducerService kafkaProducerService, KafkaConsumerService kafkaConsumerService) {
+//        this.locationService = locationService;
+//        this.kafkaProducerService = kafkaProducerService;
+//        this.kafkaConsumerService = kafkaConsumerService;
+//    }
     @Autowired
-    public LocationController(LocationService locationService, KafkaProducerService kafkaProducerService, KafkaConsumerService kafkaConsumerService) {
+        public LocationController(LocationService locationService) {
         this.locationService = locationService;
-        this.kafkaProducerService = kafkaProducerService;
-        this.kafkaConsumerService = kafkaConsumerService;
     }
 
     @PostMapping("/create")
     public ResponseEntity<Location> createLocation(@RequestBody Location location){
         locationService.createLocation(location);
-        kafkaProducerService.sendMessage("guru",location.getCity());
+        //kafkaProducerService.sendMessage("guru",location.getCity());
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -39,7 +43,7 @@ public class LocationController {
     List<Location> location = locationService.getLocations() ;
     List<Object> allCity = new ArrayList<>();
         allCity.addAll(location);
-        allCity.addAll(kafkaConsumerService.messageList);
+        //allCity.addAll(kafkaConsumerService.messageList);
     return (ResponseEntity) ResponseEntity.ok(allCity);
     }
 

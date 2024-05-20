@@ -1,6 +1,6 @@
 package com.stuti.repository;
 
-import com.stuti.Location;
+import com.stuti.model.Location;
 import com.stuti.rowMapper.LocationRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;

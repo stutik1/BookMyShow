@@ -1,6 +1,6 @@
 package com.stuti.controller;
 
-import com.stuti.Theatres;
+import com.stuti.model.Theatres;
 import com.stuti.service.TheatresService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

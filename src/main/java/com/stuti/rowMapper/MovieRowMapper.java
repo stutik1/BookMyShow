@@ -1,14 +1,14 @@
 package com.stuti.rowMapper;
 
-import com.stuti.Movies;
+import com.stuti.model.Movie;
 import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class MovieRowMapper implements RowMapper<Movies> {
+public class MovieRowMapper implements RowMapper<Movie> {
 
-    public Movies mapRow(ResultSet rs, int rowNum) throws SQLException {
-        Movies movie = new Movies();
+    public Movie mapRow(ResultSet rs, int rowNum) throws SQLException {
+        Movie movie = new Movie();
         movie.setMovieId(rs.getLong("id"));
         movie.setTitle(rs.getString("title"));
         movie.setRating(rs.getDouble("rating"));

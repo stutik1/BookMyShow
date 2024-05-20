@@ -1,4 +1,4 @@
-package com.stuti;
+package com.stuti.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -79,5 +79,18 @@ public class Bookings {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Bookings{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", showtimeId=" + showtimeId +
+                ", seatId=" + seatId +
+                ", bookingDate=" + bookingDate +
+                ", bookingTime=" + bookingTime +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

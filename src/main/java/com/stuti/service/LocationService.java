@@ -1,6 +1,6 @@
 package com.stuti.service;
 
-import com.stuti.Location;
+import com.stuti.model.Location;
 import com.stuti.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

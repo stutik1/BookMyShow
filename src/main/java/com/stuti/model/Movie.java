@@ -1,19 +1,18 @@
-package com.stuti;
+package com.stuti.model;
 
 import java.time.LocalDate;
 
-public class Movies {
+public class Movie {
     private Long movieId;
     private String title;
     private String language;
     private String genres;
-    //private Location location;
     private String actor;
     private String description;
     private Double rating;
     private LocalDate releaseDate;
 
-    public Movies(Long movieId, String title, String language, String genres, String actor, String description, Double rating, LocalDate releaseDate) {
+    public Movie(Long movieId, String title, String language, String genres, String actor, String description, Double rating, LocalDate releaseDate) {
         this.movieId = movieId;
         this.title = title;
         this.language = language;
@@ -24,7 +23,7 @@ public class Movies {
         this.releaseDate = releaseDate;
     }
 
-    public Movies() {
+    public Movie() {
 
     }
 
@@ -32,7 +31,7 @@ public class Movies {
         return movieId;
     }
 
-    public void setMovieId(Long id) {
+    public void setMovieId(Long movieId) {
         this.movieId = movieId;
     }
 

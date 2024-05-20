@@ -1,10 +1,8 @@
 package com.stuti.controller;
 
-import com.stuti.Shows;
-import com.stuti.Theatres;
+import com.stuti.model.Shows;
 import com.stuti.service.ShowService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,15 +19,12 @@ public class ShowController {
         this.showService = showService;
     }
 
-    @GetMapping("/search/{movieId}")
-    public ResponseEntity<List<Shows>> searchShows(@PathVariable Long movieId) {
-        List<Shows> shows = showService.findShowsByMovie(movieId);
-        return ResponseEntity.ok(shows);
-    }
-
-    @GetMapping("/getShow")
-    public ResponseEntity<List<Shows>> getShowsByMovieAndLocation(@RequestParam Long movieId, @RequestParam Long id) {
-        List<Shows> shows = showService.findShowsByMovieAndLocation(movieId, id);
+    @GetMapping("/search")
+    public ResponseEntity<List<Shows>> getShowsByMovieIdAndCity(@RequestParam Long movieId, @RequestParam String city) {
+        List<Shows> shows = showService.getShowsByMovieIdAndCity(movieId, city);
+        if (shows.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
         return ResponseEntity.ok(shows);
     }
 }

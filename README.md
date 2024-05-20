@@ -124,7 +124,7 @@ To publish messages to an Apache Kafka topic from a Spring Boot application, you
 
    ```java
    package com.stuti.controller;
-   import com.stuti.Location;
+   import com.stuti.model.Location;
    import com.stuti.service.KafkaConsumerService;
    import com.stuti.service.KafkaProducerService;
    import com.stuti.service.LocationService;

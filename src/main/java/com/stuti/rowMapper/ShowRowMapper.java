@@ -1,9 +1,9 @@
 package com.stuti.rowMapper;
 
-import com.stuti.Location;
-import com.stuti.Movies;
-import com.stuti.Shows;
-import com.stuti.Theatres;
+import com.stuti.model.Location;
+import com.stuti.model.Movie;
+import com.stuti.model.Shows;
+import com.stuti.model.Theatres;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
@@ -19,15 +19,15 @@ public class ShowRowMapper implements RowMapper{
         shows.setStart_time(rs.getTime("start_time").toLocalTime());
         shows.setEnd_time(rs.getTime("end_time").toLocalTime());
 
-        Movies movie = new Movies();
+        Movie movie = new Movie();
         movie.setMovieId(rs.getLong("id"));
-        movie.setTitle(rs.getString("title"));
-        movie.setRating(rs.getDouble("rating"));
-        movie.setDescription(rs.getString("description"));
-        movie.setActor(rs.getString("actor"));
-        movie.setGenres(rs.getString("genres"));
-        movie.setLanguage(rs.getString("language"));
-        movie.setReleaseDate(rs.getDate("release_date").toLocalDate());
+//        movie.setTitle(rs.getString("title"));
+//        movie.setRating(rs.getDouble("rating"));
+//        movie.setDescription(rs.getString("description"));
+//        movie.setActor(rs.getString("actor"));
+//        movie.setGenres(rs.getString("genres"));
+//        movie.setLanguage(rs.getString("language"));
+//        movie.setReleaseDate(rs.getDate("release_date").toLocalDate());
         shows.setMovies(movie);
 
         Location location = new Location();

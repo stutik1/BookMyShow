@@ -1,6 +1,6 @@
 package com.stuti.controller;
 
-import com.stuti.Users;
+import com.stuti.model.Users;
 //import com.stuti.Util;
 import com.stuti.service.UserService;
 import jakarta.validation.Valid;

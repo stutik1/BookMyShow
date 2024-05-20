@@ -1,0 +1,165 @@
+create table users(
+ id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  phone VARCHAR(255) NOT NULL,
+  createAt timestamp not null
+);
+
+create table locations(
+id SERIAL PRIMARY KEY,
+city varchar(255) not null
+);
+
+Insert into locations(id, city)
+VALUES (1, 'Bengaluru'),(2, 'Kolkata'),(3, 'Mumbai');
+
+
+Insert into locations(id, city)
+VALUES (5, 'Rishikesh');
+
+ALTER TABLE locations RENAME TO location
+
+CREATE TABLE movies (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    rating DOUBLE PRECISION,
+    description TEXT,
+    actor VARCHAR(255),
+    genres varchar(255),
+    language VARCHAR(255),
+    release_date DATE
+);
+
+
+
+INSERT INTO movies (title, rating, description, actor, genres, language, release_date, location_id)
+VALUES
+('Inception', 8.8, 'A thief who enters...', 'Leonardo DiCaprio', 'Action,Sci-Fi,Thriller', 'English', '2010-07-16', 1),
+('The Dark Knight', 9.0, 'When the menace...', 'Christian Bale', 'Action,Crime,Drama', 'English', '2008-07-18', 1),
+('Interstellar', 8.6, 'A team of...', 'Matthew McConaughey', 'Adventure,Drama,Sci-Fi', 'English', '2014-11-07', 2),
+('Pulp Fiction', 8.9, 'The lives of two...', 'John Travolta', 'Crime,Drama', 'English', '1994-10-14', 3),
+('Spirited Away', 8.6, 'During her family''s...', 'Rumi Hiiragi', 'Animation,Adventure,Family', 'Japanese', '2001-07-20', 4);
+
+INSERT INTO movies (title, rating, description, actor, genres, language, release_date)
+VALUES
+('Gravity', 8.8, 'A thief who enters...', 'Leonardo DiCaprio', 'Action,Sci-Fi,Thriller', 'English', '2010-07-16');
+DELETE FROM movies WHERE id = 5;
+drop table movies;
+
+CREATE TABLE movie_locations (
+    movie_id INT,
+    location_id INT,
+    FOREIGN KEY (movie_id) REFERENCES movies(id),
+    FOREIGN KEY (location_id) REFERENCES location(id),
+    PRIMARY KEY (movie_id, location_id)
+);
+
+SELECT m.title
+FROM movies m
+JOIN movie_locations ml ON m.id = ml.movie_id
+JOIN location l ON ml.location_id = l.id
+WHERE l.city = 'Bengaluru';
+
+
+SELECT m.id, m.title, m.rating, m.description, m.actor, m.genres, m.language, m.release_date
+FROM movies m
+JOIN movie_locations ml ON m.id = ml.movie_id
+JOIN location l ON ml.location_id = l.id
+WHERE l.city = 'Bengaluru';
+
+ALTER TABLE movies
+DROP COLUMN location_id;
+
+INSERT INTO movie_locations (movie_id, location_id)
+VALUES (4, 1),(4,3);
+
+-- ALTER TABLE location
+-- ADD COLUMN theater_name VARCHAR(255) NOT NULL;
+
+CREATE TABLE theaters (
+    id SERIAL PRIMARY KEY,
+    location_id INT REFERENCES location(id),
+    name VARCHAR(255) NOT NULL,
+    UNIQUE(name, location_id)
+);
+INSERT INTO theaters (location_id, name)
+VALUES
+    (1, 'Theater A'),
+    (2, 'Theater B'),
+    (3, 'Theater C');
+
+CREATE TABLE shows (
+    id SERIAL PRIMARY KEY,
+    movie_id INT REFERENCES movies(id),
+    location_id INT REFERENCES location(id),
+    theater_id INT REFERENCES theaters(id),
+    show_date DATE NOT NULL,
+    start_time TIME NOT NULL,
+    end_time TIME NOT NULL
+);
+
+INSERT INTO shows (movie_id, location_id, theater_id, show_date, start_time, end_time)
+VALUES
+    (1, 1, 1, '2024-03-05', '18:00:00', '21:00:00'),
+    (2, 2, 2, '2024-03-06', '15:30:00', '18:00:00'),
+    (3, 3, 3, '2024-03-07', '19:00:00', '22:00:00');
+
+    INSERT INTO shows (movie_id, location_id, theater_id, show_date, start_time, end_time)
+VALUES
+    (1, 2, 1, '2024-03-05', '18:00:00', '21:00:00');
+    (2, 2, 2, '2024-03-06', '15:30:00', '18:00:00'),
+    (4, 3, 3, '2024-03-07', '19:00:00', '22:00:00');
+
+ALTER TABLE shows
+ALTER COLUMN end_time SET NOT NULL;
+
+ALTER TABLE showtimes RENAME TO shows;
+
+CREATE TABLE bookings (
+    id SERIAL PRIMARY KEY,
+    fk_user_id INT NOT NULL,
+    fk_show_id INT NOT NULL,
+    fk_seat_id INT NOT NULL,
+    booking_date DATE NOT NULL,
+    booking_time TIME NOT NULL,
+    status VARCHAR(50) NOT NULL,
+    FOREIGN KEY (fk_user_id) REFERENCES users(id),
+    FOREIGN KEY (fk_show_id) REFERENCES shows(id),
+    FOREIGN KEY (fk_seat_id) REFERENCES seats(seat_id)
+);
+
+
+CREATE TABLE seats(
+		seat_id SERIAL PRIMARY KEY,
+    seat_row VARCHAR(2) not null,
+    seat_column INT not null,
+    status varchar(20) not null,
+    price int,
+    fk_show_id int references shows(id)
+);
+
+ALTER TABLE seats
+ALTER COLUMN status SET NOT NULL;
+
+ALTER TABLE seats
+ADD CONSTRAINT check_status CHECK (status IN ('available', 'reserved', 'unavailable'));
+
+drop table shows
+
+
+select *
+from shows
+join movies m on shows.movie_id = m.id
+join location l on shows.location_id = l.id
+where m.id =1;
+and l.id =1;
+
+INSERT INTO seats (seat_id, seat_row, seat_column, status, price, fk_show_id) VALUES
+(1, 'A', 1, 'available', 10.50, 1),
+(2, 'A', 2, 'booked', 10.50, 1),
+(3, 'B', 1, 'available', 10.50, 1),
+(4, 'B', 2, 'available', 10.50, 2),
+(5, 'C', 1, 'booked', 10.50, 2);
+
+delete from location where id =7;

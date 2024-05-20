@@ -1,46 +1,45 @@
 document.addEventListener("DOMContentLoaded", function () {
     var locationList = document.getElementById("location-list");
+    fetchLocationsNew();
 
-    fetchLocations();
+    function fetchLocationsNew(){
+        // Construct the request headers
+            const headers = new Headers();
+            headers.append('Authorization', 'Basic dXNlcjpwYXNzd29yZA==');
 
-    function fetchLocations() {
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "/bms/location/getAll", true);
-
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 2 && xhr.status === 200) {
-                var locations = JSON.parse(xhr.responseText);
-
+            // Fetch data from the server
+            fetch('/bms/location/getAll', {
+            method: 'GET',
+            headers: headers
+            })
+            .then(response => {
+            // Check if the response status is successful
+            if (response.ok) {
+                // Parse the JSON response
+                return response.json();
+            } else {
+                // If response is not ok, throw an error
+                throw new Error('Failed to fetch data');
+            }
+            })
+            .then(data => {
+                locations=data;
+                var locationList = document.getElementById("location-list");
                 locations.forEach(function (location) {
                     var locationItem = document.createElement("div");
                     locationItem.classList.add("location-item");
-
                     var city = document.createElement("h2");
                     city.textContent = location.city;
-
-
-
-                    var addToCartButton = document.createElement("button");
-                    addToCartButton.textContent = "Select";
-                    addToCartButton.addEventListener("click", function() {
-                        // Call the existing addToCart function and pass the product name
-                        addToCart(location); // Replace "Product Name" with the actual product name
-                    });
-                    //addToCartButton.addEventListener("click", "addToCart()");
-                    //addToCartButton.addEventListener("click", "addToCart");
-
-
-
                     locationItem.appendChild(city);
-                    locationItem.appendChild(addToCartButton);
-                   // locationItem.appendChild(locationItem);
+                    locationList.appendChild(locationItem);
                 });
-            } else if (xhr.readyState === 2) {
-                console.error("Error fetching location:", xhr.statusText);
-            }
-        };
+            console.log(data);
+            })
+            .catch(error => {
 
-        xhr.send();
+            // Handle any errors that occur during the fetch requestGTBPS7837H
+            console.error('Error fetching data:', error);
+            });
     }
 });
 // Array to store cart items
@@ -67,7 +66,6 @@ function  addToCart(location) {
             <button onclick="removeRow(this)">Remove</button>
         </td>
     `;
-
     cartBody.appendChild(newRow);
     //updateCart();
 }

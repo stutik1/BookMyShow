@@ -1,7 +1,7 @@
 package com.stuti.rowMapper;
 
-import com.stuti.Location;
-import com.stuti.Theatres;
+import com.stuti.model.Location;
+import com.stuti.model.Theatres;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

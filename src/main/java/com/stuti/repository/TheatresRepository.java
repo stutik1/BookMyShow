@@ -1,7 +1,8 @@
 package com.stuti.repository;
 
-import com.stuti.Theatres;
+import com.stuti.model.Theatres;
 import com.stuti.rowMapper.TheatresRowMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import java.util.List;
@@ -11,6 +12,7 @@ public class TheatresRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
+    @Autowired
     public TheatresRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
